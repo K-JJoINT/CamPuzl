@@ -1,5 +1,6 @@
 package com.JJoINT.CamPuzl;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -7,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String Home(){
-        return "Hello World!";
+    public ResponseEntity<String> Home(){
+        return ResponseEntity.ok("Hello World!");
     }
 
 }
