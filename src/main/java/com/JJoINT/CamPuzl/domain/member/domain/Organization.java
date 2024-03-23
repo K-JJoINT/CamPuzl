@@ -35,12 +35,10 @@ public class Organization extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY,optional = false)
     private Member representative;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "organization",fetch = FetchType.LAZY)
-    private Set<MemberAndOrganization> members;
-
-    @OneToOne(mappedBy = "organization", fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
     private Pub pub;
-    @OneToOne(mappedBy = "organization", fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
     private Booth booth;
 }

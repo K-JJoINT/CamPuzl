@@ -27,21 +27,14 @@ public class Booth extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TentNum tentNum;
-
+    private String boothName;
     @Min(value = 0)
     @Max(value = 5)
     private double totalRating;
     private String explanation;
     private String contents;
     private String event;
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    Organization organization;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "booth",fetch = FetchType.LAZY)
-    private Set<BoothComment> comment;
 
 
 
