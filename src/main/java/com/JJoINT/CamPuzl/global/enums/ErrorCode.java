@@ -22,8 +22,12 @@ public enum ErrorCode {
 
     // Member
     MEMBER_NOT_FOUND(404, "M001", "존재하지 않는 회원입니다"),
-    MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다");
+    MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다"),
+    INVALID_PASSWORD(404,"M003", " 잘못된 비밀번호 입니다"),
 
+    // Token
+    MISMATCH_REFRESH_TOKEN(401, "T001", "유효하지 않은 리프레시 토큰입니다"),
+    NO_PERMISSION(401, "T002", "요청에 대한 권한이 없습니다");
 
 
     private final String code;

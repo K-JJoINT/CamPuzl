@@ -7,6 +7,7 @@ import com.JJoINT.CamPuzl.global.validator.MultipleOfHalf;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "booth_comment")
 public class BoothComment extends BaseEntity {
     private String review;
@@ -26,10 +27,10 @@ public class BoothComment extends BaseEntity {
     @Max(value = 5)
     @Column(nullable = false)
     private double rating;
-    @JoinColumn(columnDefinition = "varchar(20)",nullable = false)
+    @JoinColumn(columnDefinition = "varchar(20)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
+    @JoinColumn(columnDefinition = "varchar(100)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Booth booth;
 

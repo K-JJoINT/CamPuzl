@@ -6,6 +6,7 @@ import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import com.JJoINT.CamPuzl.global.enums.Division;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Getter
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "organization")
 public class Organization extends BaseEntity {
     @Column(length = 100,nullable = false)
@@ -34,13 +35,16 @@ public class Organization extends BaseEntity {
     @JoinColumn(columnDefinition = "varchar(100)")
     @OneToOne(fetch = FetchType.LAZY,optional = false)
     private Member representative;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "organization",fetch = FetchType.LAZY)
-    private Set<MemberAndOrganization> members;
-
-    @OneToOne(mappedBy = "organization", fetch = FetchType.LAZY)
+    @OneToOne( fetch = FetchType.LAZY)
     private Pub pub;
-    @OneToOne(mappedBy = "organization", fetch = FetchType.LAZY)
+    @OneToOne( fetch = FetchType.LAZY)
     private Booth booth;
+
+    public void init(Division division, String organizationName, String uuid) {
+        this.division = Division.STUDENT;
+        this.organizationName = "게스트";
+        this.uuid = "asdfaseasefasfaf";
+    }
+
+
 }

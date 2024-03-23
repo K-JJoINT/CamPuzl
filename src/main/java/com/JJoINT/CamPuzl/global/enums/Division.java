@@ -10,7 +10,7 @@ public enum Division {
     GENERAL_STUDENT_COUNCIL("O003","총학생회"),
     CENTRAL_CLUB("O004","중앙동아리"),
     UNDERGRADUATE_CLUB("O005","학부동아리"),
-
+    STUDENT("006", "일반 학생"),
 
     //food
     SNACK("F001","안주"),

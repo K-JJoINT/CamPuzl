@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.Set;
 @Getter
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "booth")
 public class Booth extends BaseEntity {
     @Column(nullable = false)
@@ -34,14 +35,9 @@ public class Booth extends BaseEntity {
     private String explanation;
     private String contents;
     private String event;
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    Organization organization;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "booth",fetch = FetchType.LAZY)
-    private Set<BoothComment> comment;
+
+
 
 
 
