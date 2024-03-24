@@ -2,7 +2,7 @@ package com.JJoINT.CamPuzl.global.auth.service;
 
 import com.JJoINT.CamPuzl.domain.member.domain.Member;
 import com.JJoINT.CamPuzl.global.auth.dto.UserDetailsDTO;
-import com.JJoINT.CamPuzl.global.auth.repository.MemberRepository;
+import com.JJoINT.CamPuzl.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

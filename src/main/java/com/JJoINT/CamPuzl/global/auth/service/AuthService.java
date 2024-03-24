@@ -3,7 +3,7 @@ package com.JJoINT.CamPuzl.global.auth.service;
 import com.JJoINT.CamPuzl.domain.member.domain.Member;
 import com.JJoINT.CamPuzl.global.auth.dto.*;
 import com.JJoINT.CamPuzl.global.auth.jwt.JwtTokenProvider;
-import com.JJoINT.CamPuzl.global.auth.repository.MemberRepository;
+import com.JJoINT.CamPuzl.domain.member.repository.MemberRepository;
 import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
 import jakarta.transaction.Transactional;
@@ -93,6 +93,7 @@ public class AuthService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         String accessToken = jwtTokenProvider.generateAccessToken(authentication);
         String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
+        jwtTokenProvider.saveRefreshToken(studentId, refreshToken);
 
         // GeneratedTokenDTO에 액세스 토큰과 리프레시 토큰을 담아서 반환
         return GeneratedTokenDTO.builder()
@@ -101,5 +102,6 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
 
 }

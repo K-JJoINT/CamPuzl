@@ -23,16 +23,18 @@ public enum ErrorCode {
     // Member
     MEMBER_NOT_FOUND(404, "M001", "존재하지 않는 회원입니다"),
     MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다"),
+    INVALID_PASSWORD(404,"M003", " 잘못된 비밀번호 입니다"),
 
+    // Token
+    MISMATCH_REFRESH_TOKEN(401, "T001", "유효하지 않은 리프레시 토큰입니다"),
+    NO_PERMISSION(401, "T002", "요청에 대한 권한이 없습니다"),
     //Reservation
     ALREADY_EXIST_OTHER_PUPTABLE(400,"R001","다른 예약이 확정되어 있습니다. 결제를 완료하고 다른 예약을 진행해 주세요"),
     NOT_YET_RESERVED(400,"R002","예약이 확정되지 않았습니다. 기다려주세요"),
 
     //Pub
     PUB_NOT_FOUND(404, "P001", "존재하지 않는 주점입니다."),
-    MENU_NOT_FOUND(404, "P002", "존재하지 않는 메뉴입니다.")
-
-    ;
+    MENU_NOT_FOUND(404, "P002", "존재하지 않는 메뉴입니다.");
 
     private final String code;
     private final String message;

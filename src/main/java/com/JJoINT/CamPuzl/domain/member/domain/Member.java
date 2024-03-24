@@ -14,7 +14,6 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@Setter//세터 테스트에서만 사용
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,6 +38,8 @@ public class Member extends BaseEntity {
     @Column
     private String refreshToken;
 
-
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 
 }

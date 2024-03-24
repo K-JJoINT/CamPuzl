@@ -27,7 +27,6 @@ public class Pub extends BaseEntity {
     private TentNum tentNum;
 
 
-    private String pubName;
 
     //매출
     private int sales;
