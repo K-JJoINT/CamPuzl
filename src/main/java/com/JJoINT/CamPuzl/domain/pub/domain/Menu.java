@@ -23,14 +23,16 @@ import java.util.Set;
 public class Menu extends BaseEntity {
     @Column(length = 100, nullable = false)
     @Enumerated(EnumType.STRING)
-    private Division food;
-    @Column(length = 100)
-    private String division;
+    private Division division;
+    @Column(length = 100,nullable = false)
+    private String foodName;
     @Column(nullable = false)
     private int price;
 
     @JoinColumn(columnDefinition = "varchar(100)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Pub pub;
+
+
 
 }

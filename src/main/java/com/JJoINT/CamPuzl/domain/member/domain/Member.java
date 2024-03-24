@@ -8,11 +8,13 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 
 @SuperBuilder
 @Getter
+@Setter//세터 테스트에서만 사용
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,7 +24,7 @@ public class Member extends BaseEntity {
 
     @Column(length = 20,nullable = false)
     private String name;
-    @Column(length = 9,unique = true,nullable = false)
+    @Column(length = 9, unique = true, nullable = false)
     private String studentId;
 
     @JsonIgnore

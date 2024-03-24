@@ -25,6 +25,10 @@ public class Pub extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TentNum tentNum;
+
+
+    private String pubName;
+
     //매출
     private int sales;
     @Min(value = 0)

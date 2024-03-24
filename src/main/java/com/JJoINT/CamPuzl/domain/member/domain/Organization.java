@@ -35,9 +35,12 @@ public class Organization extends BaseEntity {
     @JoinColumn(columnDefinition = "varchar(100)")
     @OneToOne(fetch = FetchType.LAZY,optional = false)
     private Member representative;
-    @OneToOne( fetch = FetchType.LAZY)
+
+    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
     private Pub pub;
-    @OneToOne( fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
     private Booth booth;
 
     public void init(Division division, String organizationName, String uuid) {
