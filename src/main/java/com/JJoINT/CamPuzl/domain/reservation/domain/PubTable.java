@@ -5,12 +5,12 @@ import com.JJoINT.CamPuzl.domain.pub.domain.Pub;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 
@@ -19,20 +19,20 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "confirmedReservation")
-public class ConfirmedReservation extends BaseEntity {
+@Table(name = "pub_table")
+public class PubTable extends BaseEntity {
 
-    private int totalAmount;
+    //Todo : enum 타입으로 변경
     @Column(nullable = false)
-    private LocalDate reservationDate;
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
+    private String tableNum;
+
+    @Min(0)
+    private int totalAmount;
+
+    @JoinColumn(columnDefinition = "varchar(100)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Pub pub;
-    @JoinColumn(columnDefinition = "varchar(20)",nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member reservationName;
-    @JsonIgnore
-    @OneToMany(mappedBy = "reservationName",fetch = FetchType.LAZY)
-    private Set<Order> menus;
+
+
 
 }

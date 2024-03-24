@@ -3,7 +3,7 @@ package com.JJoINT.CamPuzl.domain.pub.domain;
 
 import com.JJoINT.CamPuzl.domain.Comment.domain.PubComment;
 import com.JJoINT.CamPuzl.domain.member.domain.Organization;
-import com.JJoINT.CamPuzl.domain.reservation.domain.ConfirmedReservation;
+import com.JJoINT.CamPuzl.domain.reservation.domain.PubTable;
 import com.JJoINT.CamPuzl.domain.reservation.domain.Reservation;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import com.JJoINT.CamPuzl.global.enums.TentNum;
@@ -16,8 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
-
 
 @SuperBuilder
 @Getter
@@ -29,6 +27,10 @@ public class Pub extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TentNum tentNum;
+
+
+    private String pubName;
+
     //매출
     private int sales;
     @Min(value = 0)
@@ -36,19 +38,11 @@ public class Pub extends BaseEntity {
     private double totalRating;
 
     private String event;
-    @JsonIgnore
-    @OneToMany(mappedBy ="pub" ,fetch = FetchType.LAZY)
-    private Set<Reservation> reservations;
-    @JsonIgnore
-    @OneToMany(mappedBy ="pub" ,fetch = FetchType.LAZY)
-    private Set<ConfirmedReservation> confirmedReservations;
 
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    Organization organization;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "pub",fetch = FetchType.LAZY)
-    private Set<PubComment> comment;
+
+
+
+
+
 }
