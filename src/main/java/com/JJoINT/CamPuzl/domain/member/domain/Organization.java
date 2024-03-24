@@ -43,11 +43,4 @@ public class Organization extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Booth booth;
 
-    public void init(Division division, String organizationName, String uuid) {
-        this.division = Division.STUDENT;
-        this.organizationName = "게스트";
-        this.uuid = "asdfaseasefasfaf";
-    }
-
-
 }

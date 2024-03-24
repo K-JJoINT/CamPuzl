@@ -2,6 +2,7 @@ package com.JJoINT.CamPuzl.domain.member.domain;
 
 import com.JJoINT.CamPuzl.domain.reservation.domain.PubTable;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
+import com.JJoINT.CamPuzl.global.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
 
 
 @SuperBuilder
@@ -38,8 +40,15 @@ public class Member extends BaseEntity {
     @Column
     private String refreshToken;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

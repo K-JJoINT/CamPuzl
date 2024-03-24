@@ -16,6 +16,7 @@ public enum ErrorCode {
     DATA_INTEGRITY_VIOLATION(400, "C008", "잘못된 데이터에 접근하였습니다, 요청 값을 확인해주세요"),
     HTTP_MESSAGE_NOT_READABLE(400, "C009", "잘못된 JSON 요청 형식입니다"),
     ILLEGAL_ARGUMENT(400, "C010", "잘못된 인수 값이 포함된 요청입니다"),
+    ORGANIZATION_NOT_FOUND(400,"C011","소속이 없습니다"),
 
     DATE_TIME_PARSE_FAILURE(400, "C011", "잘못된 DateTime 형식입니다"),
     HTTP_MESSAGE_CONVERSION(500, "C012", "요청 데이터 변환에 실패했습니다. 고객센터로 문의해주세요"),

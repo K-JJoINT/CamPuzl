@@ -5,17 +5,19 @@ import com.JJoINT.CamPuzl.global.auth.dto.*;
 import com.JJoINT.CamPuzl.global.auth.jwt.JwtTokenProvider;
 import com.JJoINT.CamPuzl.domain.member.repository.MemberRepository;
 import com.JJoINT.CamPuzl.global.enums.ErrorCode;
+import com.JJoINT.CamPuzl.global.enums.Role;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.JJoINT.CamPuzl.global.enums.Role.STUDENT;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,6 @@ import java.util.Optional;
 public class AuthService {
 
     private final MemberRepository memberRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final MemberDetailsService memberDetailsService;
@@ -35,13 +36,17 @@ public class AuthService {
         if (findStudentId.isPresent()) {
             throw new BusinessException(ErrorCode.MEMBER_PROFILE_DUPLICATION);
         }
+        //todo
+        //회원가입시 권한 student로 설정하는거 부터 다시 시작
+        Role role = STUDENT;
+
         String hashedPassword = passwordEncoder.encode(signUpRequestDTO.getPassword());
         Member member = Member.builder()
                 .name(signUpRequestDTO.getName())
                 .studentId(signUpRequestDTO.getStudentId())
                 .password(hashedPassword)
                 .build();
-
+        member.setRole(role);
 
         memberRepository.save(member);
         return SignUpResponseDTO.builder()
@@ -82,12 +87,6 @@ public class AuthService {
         // UserDetails 가져오기
         UserDetailsDTO userDetails = memberDetailsService.loadUserByUsername(studentId);
 
-        // 비밀번호 일치 여부 확인
-//        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-//            System.out.println("userDetails = " + userDetails.getPassword());
-//            System.out.println("password = " + password);
-//            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-//        }
 
         // JWT 토큰 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
