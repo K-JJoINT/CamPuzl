@@ -21,7 +21,7 @@ public class AuthController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<GeneratedTokenDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         String studentId = String.valueOf(loginRequestDTO.getStudentId());
         String password = String.valueOf(loginRequestDTO.getPassword());

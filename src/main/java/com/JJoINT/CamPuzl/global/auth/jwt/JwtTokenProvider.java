@@ -53,7 +53,6 @@ public class JwtTokenProvider {
         return generateToken(authentication, TokenType.REFRESH_TOKEN);
 
     }
-
     private String generateToken(Authentication authentication, TokenType tokenType) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

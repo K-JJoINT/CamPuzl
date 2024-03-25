@@ -2,9 +2,11 @@ package com.JJoINT.CamPuzl.global.config;
 
 import com.JJoINT.CamPuzl.global.auth.jwt.JwtAuthenticationFilter;
 import com.JJoINT.CamPuzl.global.auth.jwt.JwtTokenProvider;
+import com.JJoINT.CamPuzl.global.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +24,7 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-
+    private static final String COUNCIL_MANAGER = "STUDENT_COUNCIL_MANAGER";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -31,8 +33,12 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/**").permitAll();
-//                    auth.anyRequest().authenticated();
+                    auth.requestMatchers("/auth/login", "auth/signup").permitAll();
+//                    auth.requestMatchers("/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/auth/test").hasAuthority(COUNCIL_MANAGER);
+                    //todo
+                    //권한별로 엔드포인트 설정하기
+                    auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .logout(Customizer.withDefaults());
