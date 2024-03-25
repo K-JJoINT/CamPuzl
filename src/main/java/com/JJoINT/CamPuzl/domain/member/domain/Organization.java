@@ -22,18 +22,18 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "organization")
 public class Organization extends BaseEntity {
-    @Column(length = 100,nullable = false)
+    @Column(length = 100, nullable = false)
     private String organizationName;
-    @Column(length = 100,nullable = false)
+    @Column(length = 100, nullable = false)
     @Enumerated(EnumType.STRING)
     private Division division;
     @Column(length = 100)
     private String explanation;
-    @Column(length = 20,unique = true,nullable = false)
+    @Column(length = 20, unique = true, nullable = false)
     private String uuid;
 
     @JoinColumn(columnDefinition = "varchar(100)")
-    @OneToOne(fetch = FetchType.LAZY,optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Member representative;
 
     @JoinColumn(unique = true)

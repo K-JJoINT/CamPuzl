@@ -26,7 +26,7 @@ public class UpgradePermissionService {
         String unitCode = upgradeRequestDTO.getUnitCode();
         String permissionAccessPassword = "123";
         if (findStudentId.isPresent() && permissionPassword.equals(permissionAccessPassword)) {
-            Member member = findStudentId.get(); // 기존 학생 정보 가져오기
+            Member member = findStudentId.get();
             switch (unitCode) {
                 case "001":
                     member.setRole(Role.STUDENT_COUNCIL_MANAGER);
@@ -41,7 +41,7 @@ public class UpgradePermissionService {
                     member.setRole(Role.ADMIN);
                     break;
             }
-            memberRepository.save(member); // 수정된 멤버 정보 저장
+            memberRepository.save(member);
         } else {
             throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }

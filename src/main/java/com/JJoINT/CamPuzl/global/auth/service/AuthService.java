@@ -2,8 +2,8 @@ package com.JJoINT.CamPuzl.global.auth.service;
 
 import com.JJoINT.CamPuzl.domain.member.domain.Member;
 import com.JJoINT.CamPuzl.global.auth.dto.*;
-import com.JJoINT.CamPuzl.global.auth.jwt.JwtTokenProvider;
 import com.JJoINT.CamPuzl.domain.member.repository.MemberRepository;
+import com.JJoINT.CamPuzl.global.auth.jwt.JwtProvider;
 import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.enums.Role;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
@@ -25,9 +25,8 @@ import static com.JJoINT.CamPuzl.global.enums.Role.STUDENT;
 public class AuthService {
 
     private final MemberRepository memberRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
-    private final MemberDetailsService memberDetailsService;
 
 
     @Transactional
@@ -36,8 +35,7 @@ public class AuthService {
         if (findStudentId.isPresent()) {
             throw new BusinessException(ErrorCode.MEMBER_PROFILE_DUPLICATION);
         }
-        //todo
-        //회원가입시 권한 student로 설정하는거 부터 다시 시작
+
         Role role = STUDENT;
 
         String hashedPassword = passwordEncoder.encode(signUpRequestDTO.getPassword());
@@ -55,52 +53,28 @@ public class AuthService {
                 .build();
     }
 
-    //    @Transactional
-//    public GeneratedTokenDTO login(String studentId, String password) {
-//        Optional<Member> optionalMember = memberRepository.findByStudentId(studentId);
-//
-//        Member member = optionalMember.orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
-//
-//        if (!encoder.matches(password, member.getPassword())) {
-//            throw new BusinessException(ErrorCode.INVALID_PASSWORD);
-//        }
-//
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(studentId, password);
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//        GeneratedTokenDTO generatedTokenDTO = jwtTokenProvider.generateToken(authentication);
-//
-//        return generatedTokenDTO;
-//    }
-//    @Transactional
-//    public GeneratedTokenDTO login(String studentId, String password) {
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(studentId, password);
-//
-//
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//
-//        GeneratedTokenDTO generatedTokenDTO = jwtTokenProvider.generateToken(authentication);
-//
-//        return generatedTokenDTO;
-//    }
+
     @Transactional
     public GeneratedTokenDTO login(String studentId, String password) {
-        // UserDetails 가져오기
-        UserDetailsDTO userDetails = memberDetailsService.loadUserByUsername(studentId);
+        Optional<Member> findStudentId = memberRepository.findByStudentId(studentId);
 
+        if (findStudentId.isPresent()) {
+            Member member = findStudentId.get();
 
-        // JWT 토큰 생성
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        String accessToken = jwtTokenProvider.generateAccessToken(authentication);
-        String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
-        jwtTokenProvider.saveRefreshToken(studentId, refreshToken);
+            SecurityMemberDTO securityMemberDTO = SecurityMemberDTO.builder()
+                    .studentId(member.getId())
+                    .role(member.getRole())
+                    .name(member.getName())
+                    .build();
 
-        // GeneratedTokenDTO에 액세스 토큰과 리프레시 토큰을 담아서 반환
-        return GeneratedTokenDTO.builder()
-                .grantType("Bearer")
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+            GeneratedTokenDTO generatedTokenDTO = jwtProvider.generateTokens(securityMemberDTO);
+
+            return generatedTokenDTO;
+        } else {
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+        }
     }
-
-
 }
+
+
+

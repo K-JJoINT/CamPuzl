@@ -11,7 +11,6 @@ public class UpgradeRequestDTO {
     private final String studentId;
     private final String permissionPassword;
     private final String unitCode;
-//    private final String name;
 
 
 }

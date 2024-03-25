@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class SignUpResponseDTO {
-    private String  studentId;
+    private String studentId;
     private String name;
 
 

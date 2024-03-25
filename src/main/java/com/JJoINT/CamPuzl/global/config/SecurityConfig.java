@@ -1,8 +1,8 @@
 package com.JJoINT.CamPuzl.global.config;
 
-import com.JJoINT.CamPuzl.global.auth.jwt.JwtAuthenticationFilter;
-import com.JJoINT.CamPuzl.global.auth.jwt.JwtTokenProvider;
-import com.JJoINT.CamPuzl.global.enums.Role;
+
+import com.JJoINT.CamPuzl.global.auth.jwt.JwtAuthFilter;
+import com.JJoINT.CamPuzl.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
 
-    private static final String COUNCIL_MANAGER = "STUDENT_COUNCIL_MANAGER";
+    private static final String STUDENT_COUNCIL_MANAGER = "STUDENT_COUNCIL_MANAGER";
+    private static final String CLUB_MANAGER = "CLUB_MANAGER";
+    private static final String GENERAL_STUDENT_COUNCIL = "GENERAL_STUDENT_COUNCIL";
+    private static final String STUDENT = "STUDENT";
+    private static final String ADMIN = "ADMIN";
+
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -34,13 +40,37 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/login", "auth/signup").permitAll();
-//                    auth.requestMatchers("/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/auth/test").hasAuthority(COUNCIL_MANAGER);
+                    auth.requestMatchers("/**").permitAll();
+
+//                    auth.requestMatchers(HttpMethod.POST, "/put_your_endpoint").hasAuthority(STUDENT_COUNCIL_MANAGER);
+//                    auth.requestMatchers(HttpMethod.GET, "/put_your_endpoint").hasAuthority(STUDENT_COUNCIL_MANAGER);
+//                    auth.requestMatchers(HttpMethod.DELETE, "/put_your_endpoint").hasAuthority(STUDENT_COUNCIL_MANAGER);
+//                    auth.requestMatchers(HttpMethod.PATCH, "/put_your_endpoint").hasAuthority(STUDENT_COUNCIL_MANAGER);
+//
+//                    auth.requestMatchers(HttpMethod.POST, "/put_your_endpoint").hasAuthority(CLUB_MANAGER);
+//                    auth.requestMatchers(HttpMethod.GET, "/put_your_endpoint").hasAuthority(CLUB_MANAGER);
+//                    auth.requestMatchers(HttpMethod.DELETE, "/put_your_endpoint").hasAuthority(CLUB_MANAGER);
+//                    auth.requestMatchers(HttpMethod.PATCH, "/put_your_endpoint").hasAuthority(CLUB_MANAGER);
+//
+//                    auth.requestMatchers(HttpMethod.POST, "/put_your_endpoint").hasAuthority(GENERAL_STUDENT_COUNCIL);
+//                    auth.requestMatchers(HttpMethod.GET, "/put_your_endpoint").hasAuthority(GENERAL_STUDENT_COUNCIL);
+//                    auth.requestMatchers(HttpMethod.DELETE, "/put_your_endpoint").hasAuthority(GENERAL_STUDENT_COUNCIL);
+//                    auth.requestMatchers(HttpMethod.PATCH, "/put_your_endpoint").hasAuthority(GENERAL_STUDENT_COUNCIL);
+//
+//                    auth.requestMatchers(HttpMethod.POST, "/put_your_endpoint").hasAuthority(STUDENT);
+//                    auth.requestMatchers(HttpMethod.GET, "/put_your_endpoint").hasAuthority(STUDENT);
+//                    auth.requestMatchers(HttpMethod.DELETE, "/put_your_endpoint").hasAuthority(STUDENT);
+//                    auth.requestMatchers(HttpMethod.PATCH, "/put_your_endpoint").hasAuthority(STUDENT);
+//
+//                    auth.requestMatchers(HttpMethod.POST, "/put_your_endpoint").hasAuthority(ADMIN);
+//                    auth.requestMatchers(HttpMethod.GET, "/put_your_endpoint").hasAuthority(ADMIN);
+//                    auth.requestMatchers(HttpMethod.DELETE, "/put_your_endpoint").hasAuthority(ADMIN);
+//                    auth.requestMatchers(HttpMethod.PATCH, "/put_your_endpoint").hasAuthority(ADMIN);
                     //todo
                     //권한별로 엔드포인트 설정하기
                     auth.anyRequest().authenticated();
                 })
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .logout(Customizer.withDefaults());
 
         return httpSecurity.build();

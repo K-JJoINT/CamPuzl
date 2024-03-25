@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 
-
 @SuperBuilder
 @Getter
 @Entity
@@ -23,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 public class Member extends BaseEntity {
 
 
-    @Column(length = 20,nullable = false)
+    @Column(length = 20, nullable = false)
     private String name;
     @Column(length = 9, unique = true, nullable = false)
     private String studentId;

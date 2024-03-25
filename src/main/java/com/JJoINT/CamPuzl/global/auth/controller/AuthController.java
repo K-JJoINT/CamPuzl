@@ -25,10 +25,11 @@ public class AuthController {
     public ResponseEntity<GeneratedTokenDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         String studentId = String.valueOf(loginRequestDTO.getStudentId());
         String password = String.valueOf(loginRequestDTO.getPassword());
-        GeneratedTokenDTO generatedTokenDTO = authService.login(studentId,password);
-        return ResponseEntity.ok(generatedTokenDTO) ;
+        GeneratedTokenDTO generatedTokenDTO = authService.login(studentId, password);
+        return ResponseEntity.ok(generatedTokenDTO);
 
     }
+
     @PostMapping("/test")
     public String test() {
         return "sucess";
