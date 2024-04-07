@@ -1,10 +1,7 @@
 package com.JJoINT.CamPuzl.domain.booth.domain;
 
-import com.JJoINT.CamPuzl.domain.Comment.domain.BoothComment;
-import com.JJoINT.CamPuzl.domain.member.domain.Organization;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import com.JJoINT.CamPuzl.global.enums.TentNum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Max;
@@ -13,9 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import java.util.Set;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @Getter
@@ -24,6 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "booth")
 public class Booth extends BaseEntity {
+    private String boothName;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TentNum tentNum;
@@ -34,15 +35,25 @@ public class Booth extends BaseEntity {
     private String explanation;
     private String contents;
     private String event;
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    Organization organization;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "booth",fetch = FetchType.LAZY)
-    private Set<BoothComment> comment;
+    public Booth(String boothName, TentNum tentNum, String explanation, String contents, String event) {
+        this.boothName = boothName;
+        this.tentNum = tentNum;
+        this.explanation = explanation;
+        this.contents = contents;
+        this.event = event;
+    }
 
 
+    public void delete() {
+        this.setDeletedAt(LocalDateTime.now()); // 부모 클래스의 메서드를 활용하여 deletedAt 업데이트
+    }
 
+    public void updateInfo(String boothName, TentNum tentNum, String explanation, String contents, String event) {
+        this.boothName = boothName;
+        this.tentNum = tentNum;
+        this.explanation = explanation;
+        this.contents = contents;
+        this.event = event;
+    }
 }
