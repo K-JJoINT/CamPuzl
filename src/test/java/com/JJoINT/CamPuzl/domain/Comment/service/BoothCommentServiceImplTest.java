@@ -49,7 +49,7 @@ class BoothCommentServiceImplTest {
         BoothCommentDTO boothCommentDTO = new BoothCommentDTO("오 맛있어요", 4.5, booth);
 
         //when
-        BoothComment savedBoothComment = boothCommentService.save(boothId, boothCommentDTO);
+        BoothComment savedBoothComment = boothCommentService.save(boothCommentDTO);
 
 
         //then
@@ -78,10 +78,10 @@ class BoothCommentServiceImplTest {
         BoothCommentDTO boothCommentDTO3 = new BoothCommentDTO("오 맛있어요", 4.5, booth);
         BoothCommentDTO boothCommentDTO4 = new BoothCommentDTO("오 맛있어요", 4.5, booth);
 
-        boothCommentService.save(boothId, boothCommentDTO1);
-        boothCommentService.save(boothId, boothCommentDTO2);
-        boothCommentService.save(boothId, boothCommentDTO3);
-        boothCommentService.save(boothId, boothCommentDTO4);
+        boothCommentService.save(boothCommentDTO1);
+        boothCommentService.save(boothCommentDTO2);
+        boothCommentService.save(boothCommentDTO3);
+        boothCommentService.save(boothCommentDTO4);
 
         Assertions.assertEquals(4, boothCommentService.findByIdAll(booth.getId()).size());
     }
@@ -100,7 +100,7 @@ class BoothCommentServiceImplTest {
         Long boothId = booth.getId();
 
         BoothCommentDTO existingBoothComment = new BoothCommentDTO("오 맛있어요", 4.5, booth);
-        boothCommentService.save(boothId, existingBoothComment);
+        boothCommentService.save(existingBoothComment);
 
         //when
         BoothCommentDTO updatedBoothComment = new BoothCommentDTO("노맛", 1, booth);
