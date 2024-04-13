@@ -22,7 +22,17 @@ public enum ErrorCode {
 
     // Member
     MEMBER_NOT_FOUND(404, "M001", "존재하지 않는 회원입니다"),
-    MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다");
+    MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다"),
+
+
+    // Booth
+    BOOTH_NAME_DUPLICATION(400, "B001", "이미 존재하는 부스 이름입니다."),
+    BOOTH_NOT_FOUND(404, "B002", "존재하지 않는 부스입니다"),
+    BOOTH_ALREADY_DELETED(404, "B003", "이미 삭제된 부스입니다"),
+
+
+    //BoothComment
+    BOOTH_COMMENT_NOT_FOUND(404, "BC001", "존재하지 않은 부스 코멘트입니다");
 
 
 
