@@ -5,8 +5,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
-@Data
-@SuperBuilder
+@Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoothDTO {

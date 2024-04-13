@@ -9,11 +9,10 @@ import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class BoothServiceImpl implements BoothService{
    //TODO 현재는 모든 사람이 등록 가능 -> 나중에 권한 수정
     //부스 등록
     @Override
+    @Transactional
     public Booth save(BoothDTO boothDTO) {
 
         List<Booth> boothList = boothRepository.findAll();
@@ -59,30 +59,26 @@ public class BoothServiceImpl implements BoothService{
                         boothEntity.getEvent()));
             }
         }
-
         return boothDTOList;
     }
 
     //부스 상세 조회
     @Override
-    public BoothDTO findById(Long id) {
-        Optional<Booth> optionalBooth = boothRepository.findById(id);
-        if(optionalBooth.isPresent()) {
-            Booth booth = optionalBooth.get();
-            if(booth.getDeletedAt()==null) {
-                BoothDTO boothDTO = new BoothDTO(booth.getBoothName(),
-                        booth.getTentNum(),
-                        booth.getTotalRating(),
-                        booth.getExplanation(),
-                        booth.getContents(),
-                        booth.getEvent());
+    public BoothDTO findById(Long boothID) {
+        Booth booth = boothRepository.findById(boothID).orElseThrow(()
+                -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
-                return boothDTO;
-            } else {
-                throw new BusinessException(ErrorCode.BOOTH_ALREADY_DELETED);
-            }
+        if(booth.getDeletedAt()==null) {
+            BoothDTO boothDTO = new BoothDTO(booth.getBoothName(),
+                    booth.getTentNum(),
+                    booth.getTotalRating(),
+                    booth.getExplanation(),
+                    booth.getContents(),
+                    booth.getEvent());
+
+            return boothDTO;
         } else {
-            throw new BusinessException(ErrorCode.BOOTH_NOT_FOUND);
+            throw new BusinessException(ErrorCode.BOOTH_ALREADY_DELETED);
         }
     }
 
@@ -90,37 +86,29 @@ public class BoothServiceImpl implements BoothService{
     //TODO 현재는 모든 사람이 수정 가능 -> 나중에 권한 수정
     //TODO organization에서 booth 조회 -> organization으로 member 조회
     @Override
+    @Transactional
     public Booth update(Long boothID, BoothDTO boothDTO) {
-        Optional<Booth> optionalBooth = boothRepository.findById(boothID);
-        if(optionalBooth.isPresent()) {
-            Booth booth = optionalBooth.get();
+        Booth booth = boothRepository.findById(boothID).orElseThrow(()
+                -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
-            booth.updateInfo(boothDTO.getBoothName(),
-                    boothDTO.getTentNum(),
-                    boothDTO.getExplanation(),
-                    boothDTO.getContents(),
-                    boothDTO.getEvent());
+        booth.updateInfo(boothDTO.getBoothName(),
+                boothDTO.getTentNum(),
+                boothDTO.getExplanation(),
+                boothDTO.getContents(),
+                boothDTO.getEvent());
 
             return booth;
-        } else {
-            throw new BusinessException(ErrorCode.BOOTH_NOT_FOUND);
         }
-    }
 
     //TODO 현재는 모든 사람이 삭제 가능 -> 나중에 권한 수정
     //부스 논리적 삭제
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long boothID) {
+        Booth booth = boothRepository.findById(boothID).orElseThrow(()
+                -> new BusinessException(ErrorCode.ILLEGAL_ARGUMENT));
 
-        Optional<Booth> optionalBooth = boothRepository.findById(id);
-
-        if(optionalBooth.isPresent()) {
-            Booth booth = optionalBooth.get();
-            //deleteAt 변경
-            booth.delete();
-            boothRepository.save(booth);
-        } else {
-            throw new BusinessException(ErrorCode.ILLEGAL_ARGUMENT);
-        }
+        //deleteAt 변경
+        booth.delete();
+        boothRepository.save(booth);
     }
 }
