@@ -9,10 +9,9 @@ import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,38 +21,32 @@ public class BoothCommentServiceImpl implements BoothCommentService{
 
     //TODO 멤버 정보도 저장해야 함
     @Override
-    public BoothComment save(Long boothId, BoothCommentDTO boothCommentDTO) {
-        Optional<Booth> optionalBooth = boothRepository.findById(boothId);
+    @Transactional
+    public BoothComment save(BoothCommentDTO boothCommentDTO) {
+        Long boothId = boothCommentDTO.getBooth().getId();
+        Booth booth = boothRepository.findById(boothId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
-        if(optionalBooth.isPresent()) {
-            Booth booth = optionalBooth.get();
+        BoothComment boothComment = new BoothComment(boothCommentDTO.getReview(),
+                boothCommentDTO.getRating(),
+                booth);
 
-            //코멘트가 저장되는 부스와 사용자가 작성하는 코멘트의 부스가 동일해야 함
-            if(Objects.equals(boothId, booth.getId())) {
-                BoothComment boothComment = new BoothComment(boothCommentDTO.getReview(),
-                        boothCommentDTO.getRating(),
-                        booth);
-
-                return boothCommentRepository.save(boothComment);
-            } else { //동일하지 않았을 때
-                throw new BusinessException(ErrorCode.ILLEGAL_ARGUMENT);
-            }
-        }
-        else {
-            throw new BusinessException(ErrorCode.ENTITY_NOT_FOUND);
-        }
+        return boothCommentRepository.save(boothComment);
     }
 
     @Override
     public ArrayList<BoothCommentDTO> findByIdAll(Long id) {
-        ArrayList<BoothComment> listBoothComment = boothCommentRepository.findByBoothId(id);
+        Booth booth = boothRepository.findById(id).orElseThrow(()
+                -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
+
+        ArrayList<BoothComment> listBoothComment = boothCommentRepository.findByBooth(booth);
         ArrayList<BoothCommentDTO> listBoothCommentDTO = new ArrayList<>();
 
         for (BoothComment boothComment : listBoothComment) {
-            Booth booth = boothComment.getBooth();
-            BoothCommentDTO boothCommentDTO = new BoothCommentDTO(boothComment.getReview(),
+            BoothCommentDTO boothCommentDTO = new BoothCommentDTO(
+                    boothComment.getReview(),
                     boothComment.getRating(),
-                    booth);
+                    boothComment.getBooth());
 
             listBoothCommentDTO.add(boothCommentDTO);
         }
@@ -62,17 +55,15 @@ public class BoothCommentServiceImpl implements BoothCommentService{
     }
 
     @Override
-    public BoothComment update(Long boothID, BoothCommentDTO boothCommentDTO) {
-        Optional<BoothComment> optionalBoothComment = boothCommentRepository.findById(boothID);
-        if(optionalBoothComment.isPresent()) {
-            BoothComment boothComment = optionalBoothComment.get();
+    @Transactional
+    public BoothComment update(BoothCommentDTO boothCommentDTO) {
+        Long boothCommentID = boothCommentDTO.getBooth().getId();
+        BoothComment boothComment = boothCommentRepository.findById(boothCommentID)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_COMMENT_NOT_FOUND));
 
-            boothComment.updateInfo(boothComment.getReview(), boothComment.getRating());
+        boothComment.updateInfo(boothComment.getReview(), boothComment.getRating());
 
-            return boothComment;
-        } else {
-            throw new BusinessException(ErrorCode.BOOTH_COMMENT_NOT_FOUND);
-        }
+        return boothComment;
     }
 
     @Override

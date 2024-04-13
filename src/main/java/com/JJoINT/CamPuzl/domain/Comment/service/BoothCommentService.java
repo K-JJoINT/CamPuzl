@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public interface BoothCommentService {
 
-    BoothComment save(Long boothID, BoothCommentDTO boothComment);
+    BoothComment save(BoothCommentDTO boothComment);
 
     ArrayList<BoothCommentDTO> findByIdAll(Long id);
 
     void deleteById(Long id);
 
-    BoothComment update(Long boothID, BoothCommentDTO boothCommentDTO);
+    BoothComment update(BoothCommentDTO boothCommentDTO);
 }
