@@ -2,6 +2,7 @@ package com.JJoINT.CamPuzl.global.auth.controller;
 
 import com.JJoINT.CamPuzl.global.auth.dto.*;
 import com.JJoINT.CamPuzl.global.auth.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDTO> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
+    public ResponseEntity<SignUpResponseDTO> signUp(@RequestBody @Valid SignUpRequestDTO signUpRequestDTO) {
 
         SignUpResponseDTO responseDTO = authService.signUp(signUpRequestDTO);
         return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<GeneratedTokenDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<GeneratedTokenDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
         String studentId = String.valueOf(loginRequestDTO.getStudentId());
         String password = String.valueOf(loginRequestDTO.getPassword());
         GeneratedTokenDTO generatedTokenDTO = authService.login(studentId, password);

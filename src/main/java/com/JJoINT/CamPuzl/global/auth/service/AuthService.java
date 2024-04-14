@@ -60,16 +60,19 @@ public class AuthService {
 
         if (findStudentId.isPresent()) {
             Member member = findStudentId.get();
+            if (passwordEncoder.matches(password, member.getPassword())) {
+                SecurityMemberDTO securityMemberDTO = SecurityMemberDTO.builder()
+                        .studentId(member.getId())
+                        .role(member.getRole())
+                        .name(member.getName())
+                        .build();
 
-            SecurityMemberDTO securityMemberDTO = SecurityMemberDTO.builder()
-                    .studentId(member.getId())
-                    .role(member.getRole())
-                    .name(member.getName())
-                    .build();
+                GeneratedTokenDTO generatedTokenDTO = jwtProvider.generateTokens(securityMemberDTO);
 
-            GeneratedTokenDTO generatedTokenDTO = jwtProvider.generateTokens(securityMemberDTO);
-
-            return generatedTokenDTO;
+                return generatedTokenDTO;
+            } else {
+                throw new BusinessException(ErrorCode.INVALID_PASSWORD);
+            }
         } else {
             throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
