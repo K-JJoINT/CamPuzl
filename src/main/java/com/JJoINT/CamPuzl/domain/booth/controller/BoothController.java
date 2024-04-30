@@ -21,6 +21,7 @@ public class BoothController {
 
     private final BoothService boothService;
     private final BoothCommentService boothCommentService;
+    //커밋용 주석
 
     // 부스 등록
     @PostMapping("/booth/save")

@@ -1,7 +1,5 @@
 package com.JJoINT.CamPuzl.domain.booth.service;
 
-import com.JJoINT.CamPuzl.domain.Comment.domain.BoothComment;
-import com.JJoINT.CamPuzl.domain.Comment.repository.BoothCommentRepository;
 import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
 import com.JJoINT.CamPuzl.domain.booth.dto.BoothDTO;
 import com.JJoINT.CamPuzl.domain.booth.repository.BoothRepository;
@@ -17,9 +15,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoothServiceImpl implements BoothService{
+    //커밋용 주석
 
     private final BoothRepository boothRepository;
-    private final BoothCommentRepository boothCommentRepository;
 
    //TODO 현재는 모든 사람이 등록 가능 -> 나중에 권한 수정
     //부스 등록

@@ -6,6 +6,7 @@ import com.JJoINT.CamPuzl.domain.booth.dto.BoothDTO;
 import java.util.List;
 
 public interface BoothService {
+    //커밋용 주석
     Booth save(BoothDTO boothDTO);
 
     List<BoothDTO> findAll();

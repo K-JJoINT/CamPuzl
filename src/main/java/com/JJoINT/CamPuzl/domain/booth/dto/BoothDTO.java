@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoothDTO {
+    //커밋용 주석
     private String boothName;
     private TentNum tentNum;
     private double totalRating;
