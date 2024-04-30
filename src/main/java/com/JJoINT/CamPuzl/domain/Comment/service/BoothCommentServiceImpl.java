@@ -16,7 +16,6 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class BoothCommentServiceImpl implements BoothCommentService{
-    //커밋용 주석
     private final BoothCommentRepository boothCommentRepository;
     private final BoothRepository boothRepository;
 

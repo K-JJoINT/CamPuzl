@@ -20,7 +20,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Table(name = "booth_comment")
 public class BoothComment extends BaseEntity {
-    //커밋용 주석
     private String review;
     @MultipleOfHalf
     @Min(value = 0)

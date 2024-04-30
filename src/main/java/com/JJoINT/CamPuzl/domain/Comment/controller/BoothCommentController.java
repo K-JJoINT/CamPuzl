@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class BoothCommentController {
-    //커밋용 주석
     private final BoothCommentService boothCommentService;
 
     //한줄평 등록

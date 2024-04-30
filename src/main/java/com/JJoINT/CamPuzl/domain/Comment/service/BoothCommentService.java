@@ -6,7 +6,6 @@ import com.JJoINT.CamPuzl.domain.Comment.dto.BoothCommentDTO;
 import java.util.ArrayList;
 
 public interface BoothCommentService {
-    //커밋용 주석
 
     BoothComment save(BoothCommentDTO boothComment);
 
