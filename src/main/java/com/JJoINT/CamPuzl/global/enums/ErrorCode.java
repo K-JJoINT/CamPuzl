@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
+    //커밋용 주석
     // Common
     INVALID_INPUT_VALUE(400, "C001", "유효하지 않은 입력 값입니다"),
     METHOD_NOT_ALLOWED(405, "C002", "지원하지 않는 메서드입니다"),
