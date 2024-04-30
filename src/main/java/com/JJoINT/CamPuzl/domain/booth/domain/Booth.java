@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "booth")
 public class Booth extends BaseEntity {
-    //커밋용 주석
+
     private String boothName;
 
     @Column(nullable = false)

@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoothServiceImpl implements BoothService{
-    //커밋용 주석
 
     private final BoothRepository boothRepository;
 

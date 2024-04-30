@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface BoothRepository extends JpaRepository<Booth, Long> {
-    //커밋용 주석
     Optional<Booth> findByTentNum(TentNum tentNum);
 
     Long findById(BoothDTO boothDTO);
