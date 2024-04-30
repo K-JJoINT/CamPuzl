@@ -15,6 +15,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoothWithCommentDTO {
+    //커밋용 주석
     private BoothDTO boothDTO;
     private ArrayList<BoothCommentDTO> boothCommentDTO;
 }

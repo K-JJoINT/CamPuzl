@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoothCommentDTO {
+    //커밋용 주석
     private String review;
     private double rating;
     private Member writer;

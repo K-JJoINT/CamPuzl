@@ -11,5 +11,6 @@ import java.util.List;
 
 @Repository
 public interface BoothCommentRepository extends JpaRepository<BoothComment, Long> {
+    //커밋용 주석
     ArrayList<BoothComment> findByBooth(Booth booth);
 }
