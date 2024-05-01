@@ -4,12 +4,13 @@ import com.JJoINT.CamPuzl.domain.member.domain.Member;
 import com.JJoINT.CamPuzl.domain.pub.domain.Pub;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.util.Set;
 
 
 @SuperBuilder
@@ -17,16 +18,20 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "confirmedReservation")
+@Table(name = "pub_table")
 public class PubTable extends BaseEntity {
 
+    //Todo : enum 타입으로 변경
+    @Column(nullable = false)
+    private String tableNum;
+
+    @Min(0)
     private int totalAmount;
 
-    @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
+    @JoinColumn(columnDefinition = "varchar(100)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Pub pub;
-    @JoinColumn(columnDefinition = "varchar(20)",nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member reservationName;
+
+
 
 }
