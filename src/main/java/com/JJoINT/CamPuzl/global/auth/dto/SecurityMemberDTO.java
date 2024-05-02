@@ -12,13 +12,13 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class SecurityMemberDTO {
-    private final Long studentId;
+    private final Long id;
     @Setter
     private Role role;
 
     private final String name;
 
     public static SecurityMemberDTO fromClaims(Claims claims) {
-        return SecurityMemberDTO.builder().studentId(Long.valueOf(claims.getId())).name(claims.get("name", String.class)).role(Role.valueOf(claims.get("role", String.class))).build();
+        return SecurityMemberDTO.builder().id(Long.valueOf(claims.getId())).name(claims.get("name", String.class)).role(Role.valueOf(claims.get("role", String.class))).build();
     }
 }

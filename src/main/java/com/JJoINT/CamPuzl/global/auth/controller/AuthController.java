@@ -1,6 +1,7 @@
 package com.JJoINT.CamPuzl.global.auth.controller;
 
 import com.JJoINT.CamPuzl.global.auth.dto.*;
+import com.JJoINT.CamPuzl.global.auth.jwt.JwtProvider;
 import com.JJoINT.CamPuzl.global.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입 로직" , description = "학번과 비밀번호를 사용하여 회원가입을 진행합니다.")
@@ -33,6 +35,4 @@ public class AuthController {
         return ResponseEntity.ok(generatedTokenDTO);
 
     }
-
-
 }
