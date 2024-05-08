@@ -62,7 +62,7 @@ public class AuthService {
             Member member = findStudentId.get();
             if (passwordEncoder.matches(password, member.getPassword())) {
                 SecurityMemberDTO securityMemberDTO = SecurityMemberDTO.builder()
-                        .studentId(member.getId())
+                        .id(member.getId())
                         .role(member.getRole())
                         .name(member.getName())
                         .build();
@@ -77,6 +77,8 @@ public class AuthService {
             throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
     }
+
+
 }
 
 

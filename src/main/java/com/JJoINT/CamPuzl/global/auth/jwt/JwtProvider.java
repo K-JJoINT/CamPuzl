@@ -48,16 +48,16 @@ public class JwtProvider {
         String accessToken = generateToken(securityMemberDTO, ACCESS_TOKEN_PERIOD);
         String refreshToken = generateToken(securityMemberDTO, REFRESH_TOKEN_PERIOD);
 
-        saveRefreshToken(securityMemberDTO.getStudentId(), refreshToken);
+        saveRefreshToken(securityMemberDTO.getId(), refreshToken);
 
         return GeneratedTokenDTO.builder().accessToken(accessToken).refreshToken(refreshToken).build();
     }
 
 
     private String generateToken(SecurityMemberDTO securityMemberDTO, Long tokenPeriod) {
-        Claims claims = Jwts.claims().setSubject("studentId");
+        Claims claims = Jwts.claims().setSubject("id");
         claims.put("role", securityMemberDTO.getRole().name());
-        claims.setId(String.valueOf(securityMemberDTO.getStudentId()));
+        claims.setId(String.valueOf(securityMemberDTO.getId()));
         Date now = new Date();
 
         return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(new Date(now.getTime() + tokenPeriod)).signWith(signingKey, signatureAlgorithm).compact();
@@ -71,7 +71,7 @@ public class JwtProvider {
         Claims claims = verifyToken(refreshToken);
         SecurityMemberDTO securityMemberDTO = SecurityMemberDTO.fromClaims(claims);
 
-        Optional<Member> findMember = memberRepository.findById(securityMemberDTO.getStudentId());
+        Optional<Member> findMember = memberRepository.findById(securityMemberDTO.getId());
 
         if (findMember.isEmpty()) {
             throw new BusinessException(MEMBER_NOT_FOUND);
@@ -116,4 +116,17 @@ public class JwtProvider {
         Optional<Member> findMember = memberRepository.findById(id);
         findMember.ifPresent(member -> memberRepository.updateRefreshToken(member.getId(), refreshToken));
     }
+
+    public long extractIdFromToken(String token) {
+
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token);
+            String idString = claims.getBody().get("jti", String.class);
+            return Long.parseLong(idString);
+        } catch (JwtException | IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Error extracting ID from token.");
+        }
+    }
+
+
 }
