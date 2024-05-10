@@ -18,7 +18,7 @@ public class BoothCommentController {
     //TODO 해당 사람이 부스에 참여했는지 판단해야 함
     @Operation(summary = "부스 평점 등록", description = "부스의 한줄평, 점수 그리고 부스를 가져와서 등록합니다")
     @PostMapping("/boothComment/save/{boothId}")
-    public String saveBoothComment(HttpServletRequest request, @PathVariable("boothId") Long boothId, @RequestBody requestBoothCommentDTO requestDTO) {
+    public String saveBoothComment(@PathVariable("boothId") Long boothId, @RequestBody requestBoothCommentDTO requestDTO) {
         BoothComment boothComment = boothCommentService.save(boothId, requestDTO);
         Long boothCommentID = boothComment.getId();
         return "부스 평점이 정상적으로 등록되었습니다";
