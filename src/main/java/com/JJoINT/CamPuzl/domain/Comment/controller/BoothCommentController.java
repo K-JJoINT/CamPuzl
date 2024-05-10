@@ -5,7 +5,6 @@ import com.JJoINT.CamPuzl.domain.Comment.domain.BoothComment;
 import com.JJoINT.CamPuzl.domain.Comment.dto.requestBoothCommentDTO;
 import com.JJoINT.CamPuzl.domain.Comment.service.BoothCommentService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
