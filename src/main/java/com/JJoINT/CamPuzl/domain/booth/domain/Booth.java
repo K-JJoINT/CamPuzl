@@ -45,7 +45,6 @@ public class Booth extends BaseEntity {
         this.event = event;
     }
 
-
     public void delete() {
         this.setDeletedAt(LocalDateTime.now()); // 부모 클래스의 메서드를 활용하여 deletedAt 업데이트
     }
@@ -56,5 +55,9 @@ public class Booth extends BaseEntity {
         this.explanation = explanation;
         this.contents = contents;
         this.event = event;
+    }
+
+    public void updateTotalRating(double totalRating) {
+        this.totalRating = totalRating;
     }
 }
