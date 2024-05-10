@@ -26,15 +26,15 @@ public enum ErrorCode {
     INVALID_PASSWORD(404,"M003", " 잘못된 비밀번호 입니다"),
 
 
-
     // Booth
-    BOOTH_NAME_DUPLICATION(400, "B001", "이미 존재하는 부스 이름입니다."),
+    BOOTH_DUPLICATE_LOCATION(400, "B001", "동일한 위치의 부스가 이미 존재합니다"),
     BOOTH_NOT_FOUND(404, "B002", "존재하지 않는 부스입니다"),
     BOOTH_ALREADY_DELETED(404, "B003", "이미 삭제된 부스입니다"),
 
 
     //BoothComment
     BOOTH_COMMENT_NOT_FOUND(404, "BC001", "존재하지 않은 부스 코멘트입니다"),
+    BOOTH_COMMENT_ALREADY_RATED(400, "BC002", "해당 부스에 이미 등록된 평점이 있습니다."),
 
     // Token
     MISMATCH_REFRESH_TOKEN(401, "T001", "유효하지 않은 리프레시 토큰입니다"),
