@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Entity
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "booth_comment")
 public class BoothComment extends BaseEntity {
@@ -26,18 +26,12 @@ public class BoothComment extends BaseEntity {
     @Max(value = 5)
     @Column(nullable = false)
     private double rating;
-//    @JoinColumn(columnDefinition = "varchar(20)",nullable = false)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Member writer;
+    @JoinColumn(columnDefinition = "varchar(20)",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member writer;
     @JoinColumn(columnDefinition = "varchar(100)",nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Booth booth;
-
-    public BoothComment(String review, double rating, Booth booth) {
-        this.review = review;
-        this.rating = rating;
-        this.booth = booth;
-    }
 
     public void updateInfo(String review, double rating) {
         this.review = review;
