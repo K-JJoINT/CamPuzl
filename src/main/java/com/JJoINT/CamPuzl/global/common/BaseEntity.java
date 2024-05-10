@@ -32,4 +32,8 @@ public abstract class BaseEntity {
 
     @JsonIgnore
     private LocalDateTime deletedAt;
+
+    protected void setDeletedAt(LocalDateTime now) {
+        this.deletedAt = now;
+    }
 }
