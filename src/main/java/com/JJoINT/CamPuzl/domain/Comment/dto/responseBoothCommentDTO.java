@@ -1,6 +1,5 @@
 package com.JJoINT.CamPuzl.domain.Comment.dto;
 
-import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
 import lombok.*;
 
 
