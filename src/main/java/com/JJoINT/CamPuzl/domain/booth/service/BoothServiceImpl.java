@@ -70,9 +70,8 @@ public class BoothServiceImpl implements BoothService{
     //부스 상세 조회
     @Override
     public BoothDTO findById(Long boothId) {
-
         //논리적 삭제된 부스인지 검사
-        Booth booth = (Booth) boothRepository.findByIdAndDeletedAtIsNull(boothId)
+        Booth booth = boothRepository.findByIdAndDeletedAtIsNull(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
         return new BoothDTO(booth.getBoothName(),
