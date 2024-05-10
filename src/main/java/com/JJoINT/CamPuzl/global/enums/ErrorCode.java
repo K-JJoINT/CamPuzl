@@ -17,18 +17,29 @@ public enum ErrorCode {
     HTTP_MESSAGE_NOT_READABLE(400, "C009", "잘못된 JSON 요청 형식입니다"),
     ILLEGAL_ARGUMENT(400, "C010", "잘못된 인수 값이 포함된 요청입니다"),
     ORGANIZATION_NOT_FOUND(400,"C011","소속이 없습니다"),
-
-    DATE_TIME_PARSE_FAILURE(400, "C011", "잘못된 DateTime 형식입니다"),
-    HTTP_MESSAGE_CONVERSION(500, "C012", "요청 데이터 변환에 실패했습니다. 고객센터로 문의해주세요"),
+    DATE_TIME_PARSE_FAILURE(400, "C012", "잘못된 DateTime 형식입니다"),
+    HTTP_MESSAGE_CONVERSION(500, "C013", "요청 데이터 변환에 실패했습니다. 고객센터로 문의해주세요"),
 
     // Member
     MEMBER_NOT_FOUND(404, "M001", "존재하지 않는 회원입니다"),
     MEMBER_PROFILE_DUPLICATION(400, "M002", "이미 존재하는 회원입니다"),
     INVALID_PASSWORD(404,"M003", " 잘못된 비밀번호 입니다"),
 
+
+    // Booth
+    BOOTH_DUPLICATE_LOCATION(400, "B001", "동일한 위치의 부스가 이미 존재합니다"),
+    BOOTH_NOT_FOUND(404, "B002", "존재하지 않는 부스입니다"),
+    BOOTH_ALREADY_DELETED(404, "B003", "이미 삭제된 부스입니다"),
+
+
+    //BoothComment
+    BOOTH_COMMENT_NOT_FOUND(404, "BC001", "존재하지 않은 부스 코멘트입니다"),
+    BOOTH_COMMENT_ALREADY_RATED(400, "BC002", "해당 부스에 이미 등록된 평점이 있습니다."),
+
     // Token
     MISMATCH_REFRESH_TOKEN(401, "T001", "유효하지 않은 리프레시 토큰입니다"),
     NO_PERMISSION(401, "T002", "요청에 대한 권한이 없습니다"),
+
     //Reservation
     ALREADY_EXIST_OTHER_PUPTABLE(400,"R001","다른 예약이 확정되어 있습니다. 결제를 완료하고 다른 예약을 진행해 주세요"),
     NOT_YET_RESERVED(400,"R002","예약이 확정되지 않았습니다. 기다려주세요"),
