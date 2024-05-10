@@ -29,10 +29,9 @@ public class PubComment extends BaseEntity {
     @Column(nullable = false)
     private double rating;
     @JoinColumn(columnDefinition = "varchar(20)")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Member writer;
     @JoinColumn(columnDefinition = "varchar(100)")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Pub pub;
-
 }
