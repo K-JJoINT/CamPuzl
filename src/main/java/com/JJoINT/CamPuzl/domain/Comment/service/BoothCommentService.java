@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface BoothCommentService {
 
-    BoothComment save(HttpServletRequest request, Long boothId, requestBoothCommentDTO requestDTO);
+    BoothComment save(Long boothId, requestBoothCommentDTO requestDTO);
 
     ArrayList<responseBoothCommentDTO> findByIdAll(Long boothId);
 
