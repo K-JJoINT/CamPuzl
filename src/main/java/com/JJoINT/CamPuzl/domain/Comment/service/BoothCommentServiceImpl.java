@@ -11,7 +11,6 @@ import com.JJoINT.CamPuzl.domain.member.repository.MemberRepository;
 import com.JJoINT.CamPuzl.global.auth.jwt.JwtProvider;
 import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,24 +29,13 @@ public class BoothCommentServiceImpl implements BoothCommentService{
     //TODO 멤버 정보도 저장해야 함
     @Override
     @Transactional
-    public BoothComment save(HttpServletRequest request, Long boothId, requestBoothCommentDTO requestDTO) {
+    public BoothComment save(Long boothId, requestBoothCommentDTO requestDTO) {
 
         Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
-        // HttpServletRequest에서 Authorization 헤더를 가져옴
-        String authorizationHeader = request.getHeader("Authorization");
-
-        // Authorization 헤더의 값이 없거나 Bearer로 시작하지 않으면 null 반환
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            return null;
-        }
-
-        // 토큰 부분만 추출하여 반환
-        String token = authorizationHeader.substring(7);
-
         // JWT 토큰을 사용하여 현재 로그인한 사용자의 ID를 추출
-        long currentUserId = jwtProvider.extractIdFromToken(token);
+        long currentUserId = jwtProvider.extractIdFromTokenInHeader();
         Member member = memberRepository.findById(currentUserId).orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
 
         // 한 사용자는 하나의 부스에서 하나의 평점만 등록할 수 있음
@@ -81,7 +69,6 @@ public class BoothCommentServiceImpl implements BoothCommentService{
             booth.updateTotalRating(commentRating);
         }
         return boothCommentRepository.save(boothComment);
-
     }
 
     @Override
