@@ -1,10 +1,10 @@
 package com.JJoINT.CamPuzl.domain.pub.domain;
 
 
-import com.JJoINT.CamPuzl.domain.member.domain.Member;
 import com.JJoINT.CamPuzl.domain.member.domain.Organization;
 import com.JJoINT.CamPuzl.global.common.BaseEntity;
 import com.JJoINT.CamPuzl.global.enums.TentNum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,6 +25,9 @@ public class Pub extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TentNum tentNum;
+
+
+
     //매출
     private int sales;
     @Min(value = 0)
@@ -36,6 +39,10 @@ public class Pub extends BaseEntity {
 
     private String event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private String bootName;
+
+
+
+
+
 }

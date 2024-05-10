@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reservation")
-public class reservationController {
+public class ReservationController {
     private final CommonReservationService commonReservationService;
 
     private final MemberReservationService memberReservationService;
