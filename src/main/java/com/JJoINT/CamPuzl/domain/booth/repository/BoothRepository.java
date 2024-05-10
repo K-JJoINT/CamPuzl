@@ -1,16 +1,15 @@
 package com.JJoINT.CamPuzl.domain.booth.repository;
 
 import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
-import com.JJoINT.CamPuzl.domain.booth.dto.BoothDTO;
-import com.JJoINT.CamPuzl.global.enums.TentNum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BoothRepository extends JpaRepository<Booth, Long> {
-    Optional<Booth> findByTentNum(TentNum tentNum);
+    List<Booth> findAllByDeletedAtIsNull();
 
-    Long findById(BoothDTO boothDTO);
+    Optional<Booth> findByIdAndDeletedAtIsNull(Long boothId);
 }
