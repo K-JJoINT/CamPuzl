@@ -5,6 +5,7 @@ import com.JJoINT.CamPuzl.domain.Comment.dto.PubCommentDTO;
 import com.JJoINT.CamPuzl.domain.Comment.dto.PubCommentResponseDTO;
 import com.JJoINT.CamPuzl.domain.Comment.service.PubCommentService;
 import com.JJoINT.CamPuzl.global.auth.dto.SecurityMemberDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class PubCommentController {
     private final PubCommentService pubCommentService;
 
-    //pubid 같이 받아오게 추가
-    @GetMapping("/{id}")
-    public ResponseEntity<Page<PubCommentResponseDTO>> getCommentsByPubId(@PathVariable Long id, Pageable pageable) {
-        Page<PubCommentResponseDTO> comments = pubCommentService.getCommentsByPubId(id, pageable)
+    @Operation(summary = "댓글 저장", description = "펍에 대한 새로운 댓글을 저장합니다")
+    @GetMapping("/{pubid}")
+    public ResponseEntity<Page<PubCommentResponseDTO>> getCommentsByPubId(@PathVariable Long pubid, Pageable pageable) {
+        Page<PubCommentResponseDTO> comments = pubCommentService.getCommentsByPubId(pubid, pageable)
                 .map(pubComment -> new PubCommentResponseDTO(
                         pubComment.getId(),
                         pubComment.getReview(),
@@ -31,16 +32,17 @@ public class PubCommentController {
                 ));
         return ResponseEntity.ok(comments);
     }
-
-    @PostMapping("/save/{id}")
-    public ResponseEntity<String> saveComment(@PathVariable Long id, @RequestBody PubCommentDTO commentDto, @AuthenticationPrincipal SecurityMemberDTO securityMemberDTO) {
-        pubCommentService.saveComment(id, commentDto, securityMemberDTO);
+    @Operation(summary = "댓글 저장", description = "펍에 대한 새로운 댓글을 저장합니다")
+    @PostMapping("/save/{pubid}")
+    public ResponseEntity<String> saveComment(@PathVariable Long pubid, @RequestBody PubCommentDTO commentDto, @AuthenticationPrincipal SecurityMemberDTO securityMemberDTO) {
+        pubCommentService.saveComment(pubid, commentDto, securityMemberDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Comment saved successfully");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-        pubCommentService.deleteComment(id);
+    @Operation(summary = "댓글 삭제", description = "댓글을 ID로 삭제합니다")
+    @DeleteMapping("/{commentid}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentid) {
+        pubCommentService.deleteComment(commentid);
         return ResponseEntity.ok("Comment deleted successfully");
     }
 }
