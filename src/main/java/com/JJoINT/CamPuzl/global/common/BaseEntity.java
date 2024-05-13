@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @MappedSuperclass
 @SuperBuilder
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
     @Id
