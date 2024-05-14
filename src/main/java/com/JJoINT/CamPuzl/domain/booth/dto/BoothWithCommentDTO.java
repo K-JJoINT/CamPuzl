@@ -1,6 +1,6 @@
 package com.JJoINT.CamPuzl.domain.booth.dto;
 
-import com.JJoINT.CamPuzl.domain.Comment.dto.responseBoothCommentDTO;
+import com.JJoINT.CamPuzl.domain.Comment.dto.ResponseBoothCommentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +15,5 @@ import java.util.ArrayList;
 public class BoothWithCommentDTO {
     //커밋용 주석
     private BoothDTO boothDTO;
-    private ArrayList<responseBoothCommentDTO> boothCommentDTO;
+    private ArrayList<ResponseBoothCommentDTO> boothCommentDTO;
 }
