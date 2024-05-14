@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class responseBoothCommentDTO {
+public class ResponseBoothCommentDTO {
     private String review;
     private double rating;
     private String writer;
