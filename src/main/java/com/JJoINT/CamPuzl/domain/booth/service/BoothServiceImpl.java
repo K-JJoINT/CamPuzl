@@ -2,8 +2,8 @@ package com.JJoINT.CamPuzl.domain.booth.service;
 
 import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
 import com.JJoINT.CamPuzl.domain.booth.dto.BoothDTO;
-import com.JJoINT.CamPuzl.domain.booth.dto.saveRequestBoothDTO;
-import com.JJoINT.CamPuzl.domain.booth.dto.updateRequestBoothDTO;
+import com.JJoINT.CamPuzl.domain.booth.dto.request.SaveRequestBoothDTO;
+import com.JJoINT.CamPuzl.domain.booth.dto.request.UpdateRequestBoothDTO;
 import com.JJoINT.CamPuzl.domain.booth.repository.BoothRepository;
 import com.JJoINT.CamPuzl.global.enums.ErrorCode;
 import com.JJoINT.CamPuzl.global.error.exception.BusinessException;
@@ -25,7 +25,7 @@ public class BoothServiceImpl implements BoothService{
     @Transactional
     //TODO 현재는 모든 사람이 등록 가능 -> 나중에 권한 수정
     //TODO 회장이 등록
-    public Booth save(saveRequestBoothDTO saveRequestBoothDTO) {
+    public Booth save(SaveRequestBoothDTO saveRequestBoothDTO) {
 
         List<Booth> boothList = boothRepository.findAllByDeletedAtIsNull();
 
@@ -88,7 +88,7 @@ public class BoothServiceImpl implements BoothService{
     //TODO 회장 매니저 수정 가능, 회장이 승인
     @Override
     @Transactional
-    public Booth update(Long boothID, updateRequestBoothDTO requestDTO) {
+    public Booth update(Long boothID, UpdateRequestBoothDTO requestDTO) {
         Booth booth = boothRepository.findById(boothID).orElseThrow(()
                 -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 

@@ -1,4 +1,4 @@
-package com.JJoINT.CamPuzl.domain.booth.dto;
+package com.JJoINT.CamPuzl.domain.booth.dto.request;
 
 
 import com.JJoINT.CamPuzl.global.enums.TentNum;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class updateRequestBoothDTO {
+public class UpdateRequestBoothDTO {
     private String boothName;
     private TentNum tentNum;
     private String explanation;

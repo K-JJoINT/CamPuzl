@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class requestBoothCommentDTO {
+public class RequestBoothCommentDTO {
     private String review;
     private double rating;
-    private Booth booth;
 }

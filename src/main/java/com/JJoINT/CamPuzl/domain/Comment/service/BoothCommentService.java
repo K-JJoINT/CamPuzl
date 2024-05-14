@@ -1,18 +1,18 @@
 package com.JJoINT.CamPuzl.domain.Comment.service;
 
 import com.JJoINT.CamPuzl.domain.Comment.domain.BoothComment;
-import com.JJoINT.CamPuzl.domain.Comment.dto.responseBoothCommentDTO;
-import com.JJoINT.CamPuzl.domain.Comment.dto.requestBoothCommentDTO;
+import com.JJoINT.CamPuzl.domain.Comment.dto.ResponseBoothCommentDTO;
+import com.JJoINT.CamPuzl.domain.Comment.dto.RequestBoothCommentDTO;
 
 import java.util.ArrayList;
 
 public interface BoothCommentService {
 
-    BoothComment save(Long boothId, requestBoothCommentDTO requestDTO);
+    BoothComment save(Long boothId, RequestBoothCommentDTO requestDTO);
 
-    ArrayList<responseBoothCommentDTO> findByIdAll(Long boothId);
+    ArrayList<ResponseBoothCommentDTO> findByIdAll(Long boothId);
 
-    BoothComment update(Long boothCommentId, requestBoothCommentDTO requestDTO);
+    BoothComment update(Long boothCommentId, RequestBoothCommentDTO requestDTO);
 
     void deleteById(Long boothCommentId);
 

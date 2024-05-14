@@ -1,8 +1,8 @@
 package com.JJoINT.CamPuzl.domain.Comment.service;
 
 import com.JJoINT.CamPuzl.domain.Comment.domain.BoothComment;
-import com.JJoINT.CamPuzl.domain.Comment.dto.responseBoothCommentDTO;
-import com.JJoINT.CamPuzl.domain.Comment.dto.requestBoothCommentDTO;
+import com.JJoINT.CamPuzl.domain.Comment.dto.ResponseBoothCommentDTO;
+import com.JJoINT.CamPuzl.domain.Comment.dto.RequestBoothCommentDTO;
 import com.JJoINT.CamPuzl.domain.Comment.repository.BoothCommentRepository;
 import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
 import com.JJoINT.CamPuzl.domain.booth.repository.BoothRepository;
@@ -29,7 +29,7 @@ public class BoothCommentServiceImpl implements BoothCommentService{
     //TODO 멤버 정보도 저장해야 함
     @Override
     @Transactional
-    public BoothComment save(Long boothId, requestBoothCommentDTO requestDTO) {
+    public BoothComment save(Long boothId, RequestBoothCommentDTO requestDTO) {
 
         Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
@@ -72,16 +72,16 @@ public class BoothCommentServiceImpl implements BoothCommentService{
     }
 
     @Override
-    public ArrayList<responseBoothCommentDTO> findByIdAll(Long boothId) {
+    public ArrayList<ResponseBoothCommentDTO> findByIdAll(Long boothId) {
 
         Booth booth = boothRepository.findById(boothId).orElseThrow(()
                 -> new BusinessException(ErrorCode.BOOTH_NOT_FOUND));
 
         ArrayList<BoothComment> listBoothComment = boothCommentRepository.findByBooth(booth);
-        ArrayList<responseBoothCommentDTO> listBoothCommentDTO = new ArrayList<>();
+        ArrayList<ResponseBoothCommentDTO> listBoothCommentDTO = new ArrayList<>();
 
         for (BoothComment boothComment : listBoothComment) {
-            responseBoothCommentDTO responseBoothCommentDTO = new responseBoothCommentDTO(
+            ResponseBoothCommentDTO responseBoothCommentDTO = new ResponseBoothCommentDTO(
                     boothComment.getReview(),
                     boothComment.getRating(),
                     boothComment.getWriter().getName());
@@ -94,11 +94,30 @@ public class BoothCommentServiceImpl implements BoothCommentService{
 
     @Override
     @Transactional
-    public BoothComment update(Long boothCommentId, requestBoothCommentDTO requestDTO) {
+    public BoothComment update(Long boothCommentId, RequestBoothCommentDTO requestDTO) {
         BoothComment boothComment = boothCommentRepository.findById(boothCommentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOOTH_COMMENT_NOT_FOUND));
 
         boothComment.updateInfo(requestDTO.getReview(), requestDTO.getRating());
+
+        //평점 수정
+        double commentRating = requestDTO.getRating();
+
+        double boothTotalRating = 0;
+        double averageRating = 0;
+
+        List<BoothComment> comments = boothCommentRepository.findByBoothId(boothComment.getBooth().getId());
+        Booth booth = boothComment.getBooth();
+        if (!comments.isEmpty()) {
+            for (BoothComment comment : comments) {
+                boothTotalRating += comment.getRating();
+            }
+            boothTotalRating += commentRating;
+            averageRating = boothTotalRating / (comments.size()+1);
+            booth.updateTotalRating(averageRating);
+        } else {
+            booth.updateTotalRating(commentRating);
+        }
 
         return boothComment;
     }

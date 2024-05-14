@@ -2,19 +2,19 @@ package com.JJoINT.CamPuzl.domain.booth.service;
 
 import com.JJoINT.CamPuzl.domain.booth.domain.Booth;
 import com.JJoINT.CamPuzl.domain.booth.dto.BoothDTO;
-import com.JJoINT.CamPuzl.domain.booth.dto.saveRequestBoothDTO;
-import com.JJoINT.CamPuzl.domain.booth.dto.updateRequestBoothDTO;
+import com.JJoINT.CamPuzl.domain.booth.dto.request.SaveRequestBoothDTO;
+import com.JJoINT.CamPuzl.domain.booth.dto.request.UpdateRequestBoothDTO;
 
 import java.util.List;
 
 public interface BoothService {
-    Booth save(saveRequestBoothDTO saveRequestBoothDTO);
+    Booth save(SaveRequestBoothDTO saveRequestBoothDTO);
 
     List<BoothDTO> findAll();
 
     BoothDTO findById(Long id);
 
-    Booth update(Long boothID, updateRequestBoothDTO requestDTO);
+    Booth update(Long boothID, UpdateRequestBoothDTO requestDTO);
 
     void deleteById(Long id);
 
